@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A colorful student planner to organize assignments, study sessions, deadlines and priorities.">
+  <title>Bloom Study — Student Task Planner</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">✿</span><span>Bloom<span class="brand-light">Study</span></span></a>
+    <div class="header-actions">
+      <span class="header-date" id="headerDate">Your study day</span>
+      <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="pill"><span class="live-dot"></span> YOUR PERSONAL STUDY SPACE</div>
+        <h1>Little steps.<br><span>Big dreams.</span> ✨</h1>
+        <p>Make room for what matters. Plan your work, celebrate your progress, and give yourself credit along the way.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#addTask">＋ Add a task</a>
+          <button class="button button-soft" id="focusButton" type="button">⏱ Start focus timer</button>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Study illustration">
+        <div class="sun"></div><div class="art-star star-one">✦</div><div class="art-star star-two">✧</div>
+        <div class="book book-back"></div><div class="book book-front"><span>YOUR<br>FUTURE<br>IS BRIGHT</span></div>
+        <div class="plant-pot">🌱</div><div class="floating-note">You can do it! 💜</div>
+      </div>
+    </section>
+
+    <section class="quote-strip">
+      <span class="quote-icon">☀</span>
+      <p id="dailyQuote">Progress, not perfection.</p>
+      <span class="quote-credit">A little reminder for you</span>
+    </section>
+
+    <section class="stats">
+      <article class="stat-card stat-purple">
+        <div class="stat-top"><span class="stat-icon">📚</span><span class="stat-caption">YOUR JOURNEY</span></div>
+        <p>Total tasks</p><div class="stat-number" id="totalTasks">0</div><small>Every goal starts somewhere</small>
+        <div class="mini-decoration">✦</div>
+      </article>
+      <article class="stat-card stat-pink">
+        <div class="stat-top"><span class="stat-icon">🌸</span><span class="stat-caption">IN PROGRESS</span></div>
+        <p>Pending tasks</p><div class="stat-number" id="pendingTasks">0</div><small>One step at a time</small>
+        <div class="mini-decoration">✿</div>
+      </article>
+      <article class="stat-card stat-green">
+        <div class="stat-top"><span class="stat-icon">🏆</span><span class="stat-caption">YOU DID IT</span></div>
+        <p>Completed</p><div class="stat-number" id="completedTasks">0</div><small>Look how far you've come</small>
+        <div class="mini-decoration">✧</div>
+      </article>
+      <article class="stat-card stat-yellow">
+        <div class="stat-top"><span class="stat-icon">🔥</span><span class="stat-caption">DAILY GOAL</span></div>
+        <p>Completion rate</p><div class="stat-number" id="progressLabel">0%</div><small>Keep your momentum</small>
+        <div class="mini-decoration">☀</div>
+      </article>
+    </section>
+
+    <section class="progress-panel">
+      <div class="progress-text">
+        <div class="progress-badge">💜</div>
+        <div><h2>Your progress blooms here</h2><p id="progressMessage">Add a task and start making progress!</p></div>
+      </div>
+      <div class="progress-right"><strong id="progressPercent">0%</strong><div class="progress-track"><div class="progress-fill" id="progressBar"></div></div></div>
+    </section>
+
+    <section class="main-grid">
+      <section class="panel form-panel" id="addTask">
+        <div class="section-heading"><div><span class="section-kicker">MAKE A PLAN</span><h2 id="formHeading">Plant a new goal 🌱</h2><p>Every little task moves you forward.</p></div><span class="heading-emoji">✏️</span></div>
+        <form id="taskForm">
+          <label for="taskTitle">What do you need to do?</label>
+          <input id="taskTitle" type="text" maxlength="120" placeholder="e.g. Revise Java inheritance..." required>
+          <div class="form-row">
+            <div><label for="taskSubject">Subject</label><select id="taskSubject"><option>General</option><option>Java</option><option>DBMS</option><option>Software Testing</option><option>Generative AI</option><option>Computer Networks</option><option>Mathematics</option><option>Project</option><option>Personal</option><option>Other</option></select></div>
+            <div><label for="taskPriority">Priority</label><select id="taskPriority"><option value="Medium">🟡 Medium</option><option value="High">🔴 High</option><option value="Low">🟢 Low</option></select></div>
+          </div>
+          <div class="form-row">
+            <div><label for="taskDate">Due date</label><input id="taskDate" type="date"></div>
+            <div><label for="taskTime">Time (optional)</label><input id="taskTime" type="time"></div>
+          </div>
+          <label for="taskNotes">Notes (optional)</label>
+          <textarea id="taskNotes" rows="2" maxlength="300" placeholder="Add a reminder or a tiny plan..."></textarea>
+          <div class="form-actions"><button class="button button-primary submit-button" id="submitTask" type="submit">＋ Add to my list</button><button class="button button-quiet" id="cancelEdit" type="button" hidden>Cancel</button></div>
+          <p class="privacy-note">🔒 Your tasks stay in this browser on this device.</p>
+        </form>
+      </section>
+
+      <section class="panel list-panel">
+        <div class="section-heading list-title-row"><div><span class="section-kicker">YOUR TO-DO LIST</span><h2>Today's study garden 🌷</h2><p>Pick a task and give it your best.</p></div><span class="task-count" id="visibleCount">0 tasks</span></div>
+        <div class="toolbar">
+          <div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="Search your tasks..." aria-label="Search tasks"></div>
+          <select id="sortSelect" class="sort-select" aria-label="Sort tasks"><option value="created">Newest first</option><option value="due">Due date</option><option value="priority">Priority</option><option value="alphabetical">A to Z</option></select>
+        </div>
+        <div class="filters" aria-label="Filter tasks">
+          <button class="filter active" data-filter="all" type="button">All <span id="allCount">0</span></button>
+          <button class="filter" data-filter="pending" type="button">To do <span id="pendingCount">0</span></button>
+          <button class="filter" data-filter="completed" type="button">Done <span id="doneCount">0</span></button>
+        </div>
+        <div id="taskList" class="task-list"></div>
+        <div class="empty-state" id="emptyHint"><div class="empty-art">🌼</div><h3>A fresh page!</h3><p>No tasks match just yet. Add a goal and watch your garden grow.</p></div>
+        <div class="list-footer"><button class="text-button" id="clearCompleted" type="button">Clear completed</button><button class="text-button" id="exportButton" type="button">⇩ Export tasks</button></div>
+      </section>
+    </section>
+
+    <footer><span>✿ BloomStudy</span><span>Made with care, for your big dreams 💜</span></footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="timer-modal" id="timerModal" hidden>
+    <div class="timer-card">
+      <button class="modal-close" id="closeTimer" aria-label="Close timer" type="button">×</button>
+      <div class="timer-flower">🌺</div><span class="section-kicker">FOCUS TIME</span><h2>One thing at a time.</h2>
+      <p>Take a little break from distractions and focus on one task.</p>
+      <div class="timer-display" id="timerDisplay">25:00</div>
+      <div class="timer-controls"><button class="button button-primary" id="timerStart" type="button">▶ Start</button><button class="button button-soft" id="timerReset" type="button">↺ Reset</button></div>
+      <div class="timer-presets"><button type="button" data-minutes="15">15 min</button><button class="selected" type="button" data-minutes="25">25 min</button><button type="button" data-minutes="45">45 min</button></div>
+    </div>
+  </div>
+</body>
+</html>
